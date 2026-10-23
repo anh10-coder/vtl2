@@ -1,0 +1,2509 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <title id="pageTitle">KIỂM TRA THỬ VẬT LÝ - ĐỀ SỐ 2 (50 PHÚT)</title>
+  <!-- MathJax hiển thị công thức Vật lý -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    :root {
+      --primary: #1d4ed8;
+      --primary-dark: #1e3a8a;
+      --primary-light: #dbeafe;
+      --accent: #0284c7;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --warning: #d97706;
+      --warning-bg: #fef3c7;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      padding-bottom: 90px;
+    }
+
+    /* =========================================================
+       1. MÀN HÌNH BẮT BUỘC NHẬP HỌ VÀ TÊN TRƯỚC KHI VÀO BÀI THI
+       ========================================================= */
+    .start-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: linear-gradient(145deg, #0f172a 0%, #1e3a8a 60%, #1d4ed8 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    .start-card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      animation: fadeUp 0.3s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .start-badge {
+      display: inline-block;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 99px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .start-card h1 {
+      font-size: 1.45rem;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .start-meta {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin: 14px 0 18px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .start-meta div strong { color: var(--text); }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .form-group label span { color: var(--danger); }
+
+    .form-input {
+      width: 100%;
+      padding: 13px 14px;
+      font-size: 16px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.2s;
+      font-weight: 600;
+    }
+    .form-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+    }
+    .form-input.input-error {
+      border-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .error-msg {
+      display: none;
+      color: var(--danger);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    .btn-start-exam {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 8px;
+      box-shadow: 0 6px 18px rgba(29, 78, 216, 0.3);
+      transition: transform 0.15s;
+    }
+    .btn-start-exam:active { transform: scale(0.98); }
+
+    /* =========================================================
+       2. THANH HEADER CỐ ĐỊNH
+       ========================================================= */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #fff;
+      padding: 10px 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .brand-box h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+    .student-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #e2e8f0;
+      margin-top: 2px;
+    }
+    .student-pill strong {
+      color: #fde047;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timer-badge {
+      background: rgba(255, 255, 255, 0.14);
+      border: 1.5px solid rgba(255, 255, 255, 0.28);
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fde047;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+    .timer-badge.urgent {
+      background: rgba(220, 38, 38, 0.45);
+      border-color: #f87171;
+      color: #fecaca;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .btn-submit { background: #22c55e; color: #fff; }
+    .btn-submit:hover { background: #16a34a; }
+    .btn-outline-light {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    /* =========================================================
+       3. BỐ CỤC CHÍNH
+       ========================================================= */
+    .main-container {
+      max-width: 1400px;
+      margin: 16px auto;
+      padding: 0 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr 430px;
+        padding: 0 20px;
+      }
+      body { padding-bottom: 40px; }
+    }
+
+    /* =========================================================
+       4. KHU VỰC KẾT QUẢ, VIDEO GIẢI & BẢNG ĐÁP ÁN SAU NỘP BÀI
+       ========================================================= */
+    #resultHub {
+      display: none;
+      background: #ffffff;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 25px rgba(29, 78, 216, 0.12);
+    }
+
+    .result-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .score-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+    @media (min-width: 640px) {
+      .score-cards { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .score-item {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 10px;
+      text-align: center;
+    }
+    .score-item .s-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .score-item .s-val {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 2px 0;
+    }
+    .score-item.total-highlight {
+      background: var(--primary-light);
+      border-color: #93c5fd;
+    }
+    .score-item.total-highlight .s-val {
+      color: var(--danger);
+      font-size: 1.75rem;
+    }
+
+    /* KHUNG VIDEO GIẢI CHI TIẾT SAU KHI NỘP BÀI */
+    .video-solution-card {
+      margin-top: 16px;
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border: 2px solid #fda4af;
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.08);
+    }
+    .video-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .video-badge-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .video-icon-pulse {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: #e11d48;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.3);
+    }
+    .video-info-text h4 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #881337;
+    }
+    .video-info-text p {
+      font-size: 0.85rem;
+      color: #9f1239;
+      margin-top: 2px;
+    }
+    .video-action-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .btn-watch-video {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.28);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .btn-watch-video:hover {
+      background: #9f1239;
+    }
+    .btn-toggle-embed {
+      background: #ffffff;
+      color: #be123c;
+      border: 1.5px solid #fb7185;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .extra-video-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #fda4af;
+    }
+    .extra-video-pill {
+      background: #ffffff;
+      color: #9f1239;
+      border: 1px solid #fda4af;
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .extra-video-pill:hover {
+      background: #ffe4e6;
+    }
+    .video-embed-wrapper {
+      display: none;
+      margin-top: 14px;
+    }
+    .video-mode-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: #fff;
+      border: 1px solid #fda4af;
+      border-bottom: none;
+      padding: 8px 12px;
+      border-radius: 12px 12px 0 0;
+      font-size: 0.82rem;
+      color: #881337;
+    }
+    .video-mode-btns {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .mode-pill {
+      border: 1px solid #fda4af;
+      background: #fff1f2;
+      color: #9f1239;
+      padding: 4px 10px;
+      border-radius: 99px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .mode-pill.active {
+      background: #e11d48;
+      color: #fff;
+      border-color: #e11d48;
+    }
+    .video-embed-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      background: #0f172a;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      border: 2px solid #fda4af;
+    }
+    .video-embed-container iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .q-video-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ffe4e6;
+      color: #be123c;
+      border: 1px solid #fda4af;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 8px;
+    }
+    .q-video-link:hover {
+      background: #fecdd3;
+    }
+
+    /* BẢNG ĐÁP ÁN NHANH SAU KHI LÀM XONG */
+    .quick-key-box {
+      margin-top: 16px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .quick-key-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .key-p1-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    @media (min-width: 640px) {
+      .key-p1-grid { grid-template-columns: repeat(9, 1fr); }
+    }
+    .key-cell {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 4px;
+      text-align: center;
+      font-size: 0.8rem;
+      background: #fff;
+      cursor: pointer;
+    }
+    .key-cell.k-ok { background: var(--success-bg); border-color: var(--success); color: #14532d; }
+    .key-cell.k-err { background: var(--danger-bg); border-color: var(--danger); color: #7f1d1d; }
+
+    .solution-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border);
+    }
+    .filter-btn {
+      padding: 8px 14px;
+      border-radius: 99px;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .filter-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* =========================================================
+       5. THẺ CÂU HỎI & LỜI GIẢI CHI TIẾT
+       ========================================================= */
+    .section-banner {
+      background: var(--primary-dark);
+      color: #fff;
+      padding: 13px 16px;
+      border-radius: 12px;
+      margin: 18px 0 12px;
+    }
+    .section-banner h3 {
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .section-banner p {
+      font-size: 0.83rem;
+      color: #bfdbfe;
+      margin-top: 3px;
+    }
+
+    .q-card {
+      background: var(--card);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+      scroll-margin-top: 80px;
+    }
+    .q-card.card-correct { border-left: 6px solid var(--success); }
+    .q-card.card-wrong { border-left: 6px solid var(--danger); }
+
+    .q-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+    .q-num {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1rem;
+    }
+    .q-status {
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .q-content {
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+
+    .q-figure {
+      margin: 12px 0;
+      padding: 10px;
+      background: #f8fafc;
+      border: 1px dashed #94a3b8;
+      border-radius: 10px;
+      text-align: center;
+      overflow-x: auto;
+    }
+    .q-figure svg, .q-figure img {
+      width: 100%;
+      max-width: 420px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+    .q-figure.wide-svg svg, .q-figure.wide-svg img {
+      max-width: 560px;
+    }
+    .q-figure-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .p1-options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 600px) {
+      .p1-options { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .p1-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.15s;
+      min-height: 50px;
+    }
+    .p1-opt:active { transform: scale(0.99); }
+    .p1-opt.selected {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      font-weight: 700;
+    }
+    .p1-opt.ans-correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: #14532d;
+      font-weight: 700;
+    }
+    .p1-opt.ans-wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: #7f1d1d;
+    }
+
+    .opt-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1.5px solid #64748b;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+      background: #fff;
+    }
+    .p1-opt.selected .opt-circle {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .p1-opt.ans-correct .opt-circle {
+      background: var(--success);
+      color: #fff;
+      border-color: var(--success);
+    }
+    .p1-opt.ans-wrong .opt-circle {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    .p2-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .p2-item {
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @media (min-width: 600px) {
+      .p2-item {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+    .p2-item.sub-correct { background: #f0fdf4; border-color: #86efac; }
+    .p2-item.sub-wrong { background: #fef2f2; border-color: #fca5a5; }
+
+    .p2-text {
+      font-size: 0.95rem;
+      flex: 1;
+    }
+    .p2-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      min-width: 170px;
+      flex-shrink: 0;
+    }
+    .tf-btn {
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #94a3b8;
+      background: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+    .tf-btn.active-true {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .tf-btn.active-false {
+      background: #0f172a;
+      color: #fff;
+      border-color: #0f172a;
+    }
+    .tf-btn.correct-choice {
+      box-shadow: 0 0 0 2px var(--success);
+      border-color: var(--success);
+    }
+
+    .p3-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: #f8fafc;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .p3-input {
+      width: 160px;
+      padding: 10px 14px;
+      font-size: 16px;
+      font-weight: 800;
+      border: 2px solid #64748b;
+      border-radius: 10px;
+      letter-spacing: 1px;
+    }
+    .p3-input:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .sol-box {
+      display: none;
+      margin-top: 14px;
+      padding: 14px 16px;
+      background: #eff6ff;
+      border-left: 5px solid var(--primary);
+      border-radius: 10px;
+      font-size: 0.94rem;
+    }
+    .sol-title {
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    /* =========================================================
+       6. PHIẾU TRẢ LỜI OMR
+       ========================================================= */
+    .omr-panel {
+      background: #fff;
+      border: 2px solid #1e293b;
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (min-width: 1024px) {
+      .omr-panel {
+        position: sticky;
+        top: 72px;
+        max-height: calc(100vh - 88px);
+        overflow-y: auto;
+      }
+      .mobile-bottom-bar, .drawer-backdrop, .drawer-close-bar {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 1023px) {
+      .omr-panel {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 200;
+        max-height: 82vh;
+        overflow-y: auto;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(105%);
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+        padding-bottom: 28px;
+      }
+      .omr-panel.open {
+        transform: translateY(0);
+      }
+    }
+
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 190;
+    }
+    .drawer-backdrop.open { display: block; }
+
+    .drawer-close-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 120;
+      background: #ffffff;
+      border-top: 1.5px solid var(--border);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-open-omr {
+      flex: 1;
+      background: #eff6ff;
+      color: var(--primary-dark);
+      border: 1.5px solid #93c5fd;
+      padding: 11px 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .omr-sheet {
+      position: relative;
+      border: 1.5px solid #334155;
+      padding: 12px 10px;
+      background: #fff;
+      font-family: 'Times New Roman', Times, serif;
+    }
+    .omr-corner {
+      width: 9px;
+      height: 9px;
+      background: #000;
+      position: absolute;
+    }
+    .omr-corner.tl { top: 4px; left: 4px; }
+    .omr-corner.tr { top: 4px; right: 4px; }
+    .omr-corner.bl { bottom: 4px; left: 4px; }
+    .omr-corner.br { bottom: 4px; right: 4px; }
+
+    .omr-title {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+    .omr-info {
+      font-size: 0.8rem;
+      border-bottom: 1px solid #94a3b8;
+      padding-bottom: 6px;
+      margin-bottom: 8px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+    .omr-sec-label {
+      font-weight: 700;
+      font-size: 0.82rem;
+      margin: 6px 0 4px;
+      font-family: sans-serif;
+    }
+
+    .omr-p1-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      border: 1px solid #475569;
+      padding: 6px;
+      background: #fafafa;
+    }
+    .omr-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      padding: 2px 3px;
+      font-family: sans-serif;
+    }
+    .omr-qnum {
+      font-weight: 700;
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .omr-bubbles { display: flex; gap: 5px; }
+    .bubble {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1px solid #334155;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-family: sans-serif;
+      cursor: pointer;
+      background: #fff;
+      font-weight: 700;
+    }
+    .bubble.filled { background: #0f172a; color: #fff; border-color: #0f172a; }
+    .bubble.omr-correct { background: var(--success) !important; border-color: var(--success) !important; color: #fff !important; }
+    .bubble.omr-wrong { background: var(--danger) !important; border-color: var(--danger) !important; color: #fff !important; }
+    .bubble.omr-missed { border: 2px solid var(--success) !important; color: var(--success) !important; }
+
+    .omr-p2-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      border: 1px solid #475569;
+      padding: 6px;
+      background: #fafafa;
+    }
+    .omr-p2-card {
+      border: 1px solid #94a3b8;
+      padding: 4px 6px;
+      background: #fff;
+    }
+    .omr-p3-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      border: 1px solid #475569;
+      padding: 6px;
+      background: #fafafa;
+    }
+    .omr-p3-card {
+      border: 1px solid #94a3b8;
+      padding: 4px;
+      background: #fff;
+      text-align: center;
+      font-family: sans-serif;
+      font-size: 0.75rem;
+    }
+    .omr-p3-boxes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 3px;
+    }
+    .omr-p3-char {
+      height: 20px;
+      border: 1px solid #334155;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===============================================================
+     MÀN HÌNH BẮT BUỘC NHẬP HỌ VÀ TÊN TRƯỚC KHI VÀO LÀM BÀI
+     =============================================================== -->
+<div class="start-overlay" id="startOverlay">
+  <div class="start-card">
+    <span class="start-badge" id="startBadge">Vật Lý 12 • Giữa Học Kì 1</span>
+    <h1 id="startExamTitle">KIỂM TRA THỬ VẬT LÝ - ĐỀ SỐ 2</h1>
+    <p style="color: var(--muted); font-size: 0.92rem;">
+      Vui lòng điền đầy đủ <b>Họ và tên</b> trước khi bắt đầu tính giờ làm bài.
+    </p>
+
+    <div class="start-meta">
+      <div>⏱️ Thời gian: <strong id="metaDuration">50 phút</strong></div>
+      <div>📝 Tổng số câu: <strong id="metaTotalQ">28 câu</strong></div>
+      <div>📌 Phần I: <strong>18 câu (4,5đ)</strong></div>
+      <div>📌 Phần II & III: <strong>10 câu (5,5đ)</strong></div>
+    </div>
+
+    <form id="startForm" onsubmit="handleStartExam(event)">
+      <div class="form-group">
+        <label for="studentNameInput">Họ và tên thí sinh <span>* (Bắt buộc)</span></label>
+        <input
+          type="text"
+          id="studentNameInput"
+          class="form-input"
+          placeholder="Nhập họ và tên của bạn..."
+          autocomplete="name"
+        />
+        <div class="error-msg" id="nameErrorMsg">⚠️ Bạn bắt buộc phải nhập Họ và tên mới được vào làm bài!</div>
+      </div>
+
+      <div class="form-group">
+        <label for="studentClassInput">Lớp / Số báo danh (Tùy chọn)</label>
+        <input
+          type="text"
+          id="studentClassInput"
+          class="form-input"
+          placeholder="VD: 12A1 - SBD: 012345"
+        />
+      </div>
+
+      <button type="submit" class="btn-start-exam" id="btnStartExam">
+        🚀 BẮT ĐẦU LÀM BÀI (50 PHÚT)
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ===============================================================
+     THANH HEADER CỐ ĐỊNH
+     =============================================================== -->
+<header>
+  <div class="header-inner">
+    <div class="brand-box">
+      <h2 id="headerExamTitle">KIỂM TRA THỬ VẬT LÝ - ĐỀ 2</h2>
+      <div class="student-pill">
+        👤 Thí sinh: <strong id="headerStudentName">Chưa nhập tên</strong>
+        <span id="headerStudentClass"></span>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div id="timerBox" class="timer-badge">
+        <span>⏱️</span>
+        <span id="timerDisplay">50:00</span>
+      </div>
+      <button class="btn btn-submit" id="topSubmitBtn" onclick="submitExam()">✅ Nộp bài</button>
+      <button class="btn btn-outline-light" onclick="resetExam()">🔄 Làm lại</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===============================================================
+     KHUNG NỘI DUNG ĐỀ THI & PHIẾU TRẢ LỜI
+     =============================================================== -->
+<div class="main-container">
+  <div>
+    <!-- KHU VỰC HIỂN THỊ ĐIỂM, VIDEO GIẢI & ĐÁP ÁN CHI TIẾT SAU KHI NỘP BÀI -->
+    <div id="resultHub">
+      <div class="result-header">
+        <div>
+          <h2 style="color: var(--primary-dark); font-size: 1.25rem;">🎉 KẾT QUẢ BÀI LÀM & ĐÁP ÁN CHI TIẾT</h2>
+          <p id="resultStudentInfo" style="font-size: 0.9rem; color: var(--muted); margin-top: 2px;"></p>
+        </div>
+        <button class="btn btn-submit" onclick="scrollToFirstSolution()">📖 Xem giải chi tiết từng câu</button>
+      </div>
+
+      <div class="score-cards">
+        <div class="score-item total-highlight">
+          <div class="s-label">TỔNG ĐIỂM</div>
+          <div class="s-val" id="resTotal">0,00 / 10</div>
+          <div class="s-label" id="resTime">Thời gian: 00:00</div>
+        </div>
+        <div class="score-item">
+          <div class="s-label">PHẦN I (18 câu)</div>
+          <div class="s-val" id="resP1">0,00 / 4,50</div>
+          <div class="s-label" id="resCountP1">0/18 câu đúng</div>
+        </div>
+        <div class="score-item">
+          <div class="s-label">PHẦN II (4 câu Đ/S)</div>
+          <div class="s-val" id="resP2">0,00 / 4,00</div>
+          <div class="s-label" id="resCountP2">0/16 ý đúng</div>
+        </div>
+        <div class="score-item">
+          <div class="s-label">PHẦN III (6 câu ngắn)</div>
+          <div class="s-val" id="resP3">0,00 / 1,50</div>
+          <div class="s-label" id="resCountP3">0/6 câu đúng</div>
+        </div>
+      </div>
+
+      <!-- KHU VỰC VIDEO CHỮA ĐỀ CHI TIẾT (CHỈ HIỆN SAU KHI NỘP BÀI) -->
+      <div class="video-solution-card" id="videoSolutionSection"></div>
+
+      <!-- BẢNG TRA CỨU NHANH ĐÁP ÁN -->
+      <div class="quick-key-box">
+        <div class="quick-key-title">
+          <span id="quickKeyHeaderTitle">📋 BẢNG ĐÁP ÁN CHUẨN ĐỀ SỐ 2 (Bấm vào ô bất kỳ để nhảy tới lời giải chi tiết câu đó)</span>
+        </div>
+        <div style="font-size: 0.82rem; font-weight: 700; margin-bottom: 6px; color: var(--muted);">• PHẦN I: Trắc nghiệm 4 lựa chọn</div>
+        <div class="key-p1-grid" id="quickKeyP1"></div>
+
+        <div style="font-size: 0.82rem; font-weight: 700; margin: 8px 0 6px; color: var(--muted);">• PHẦN II (Đúng/Sai) & PHẦN III (Trả lời ngắn)</div>
+        <div id="quickKeyP2P3" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; font-size: 0.83rem;"></div>
+      </div>
+
+      <!-- BỘ LỌC CÂU HỎI SAU KHI NỘP BÀI -->
+      <div class="solution-toolbar">
+        <button class="filter-btn active" id="filter-all" onclick="filterQuestions('all')">Tất cả câu hỏi (28)</button>
+        <button class="filter-btn" id="filter-wrong" onclick="filterQuestions('wrong')">❌ Các câu làm sai / chưa làm</button>
+        <button class="filter-btn" id="filter-correct" onclick="filterQuestions('correct')">✅ Các câu làm đúng</button>
+      </div>
+    </div>
+
+    <!-- PHẦN I -->
+    <div class="section-banner">
+      <h3>PHẦN I. Câu trắc nghiệm nhiều phương án lựa chọn (4,5 điểm)</h3>
+      <p>Thí sinh trả lời từ câu 1 đến câu 18. Mỗi câu hỏi thí sinh chỉ chọn một phương án (0,25 điểm/câu).</p>
+    </div>
+    <div id="part1List"></div>
+
+    <!-- PHẦN II -->
+    <div class="section-banner">
+      <h3>PHẦN II. Câu trắc nghiệm đúng sai (4,0 điểm)</h3>
+      <p>Thí sinh trả lời từ câu 1 đến câu 4. Trong mỗi ý a), b), c), d) ở mỗi câu, chọn Đúng hoặc Sai (1 ý: 0,1đ • 2 ý: 0,25đ • 3 ý: 0,5đ • 4 ý: 1,0đ).</p>
+    </div>
+    <div id="part2List"></div>
+
+    <!-- PHẦN III -->
+    <div class="section-banner">
+      <h3>PHẦN III. Câu trắc nghiệm trả lời ngắn (1,5 điểm)</h3>
+      <p>Thí sinh trả lời từ câu 1 đến câu 6. Điền kết quả số vào ô trống (0,25 điểm/câu).</p>
+    </div>
+    <div id="part3List"></div>
+  </div>
+
+  <!-- PHIẾU TRẢ LỜI TRẮC NGHIỆM -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleOMRDrawer(false)"></div>
+  <aside class="omr-panel" id="omrPanel">
+    <div class="drawer-close-bar">
+      <strong style="color: var(--primary-dark);">📋 Phiếu Trả Lời Trắc Nghiệm</strong>
+      <button class="btn" style="background:#e2e8f0; padding:6px 12px;" onclick="toggleOMRDrawer(false)">Đóng ✕</button>
+    </div>
+
+    <div class="omr-sheet">
+      <div class="omr-corner tl"></div>
+      <div class="omr-corner tr"></div>
+      <div class="omr-corner bl"></div>
+      <div class="omr-corner br"></div>
+
+      <div class="omr-title">PHIẾU TRẢ LỜI TRẮC NGHIỆM</div>
+      <div class="omr-info">
+        <div>Họ tên: <b id="omrStudentName">...</b></div>
+        <div>Mã đề: <b id="omrExamCode">002</b></div>
+        <div>Môn: <b id="omrSubject">Vật Lý 12</b></div>
+        <div>Thời gian: <b id="omrDuration">50 phút</b></div>
+      </div>
+
+      <div class="omr-sec-label">■ PHẦN I (Câu 1 - 18)</div>
+      <div class="omr-p1-grid" id="omrP1"></div>
+
+      <div class="omr-sec-label">■ PHẦN II (Câu 1 - 4: Đúng / Sai)</div>
+      <div class="omr-p2-grid" id="omrP2"></div>
+
+      <div class="omr-sec-label">■ PHẦN III (Câu 1 - 6: Trả lời ngắn)</div>
+      <div class="omr-p3-grid" id="omrP3"></div>
+    </div>
+  </aside>
+</div>
+
+<!-- THANH CỐ ĐỊNH DƯỚI ĐÁY MÀN HÌNH ĐIỆN THOẠI -->
+<div class="mobile-bottom-bar">
+  <button class="btn-open-omr" onclick="toggleOMRDrawer(true)">
+    📋 Phiếu tô (<span id="mobileProgressText">0/28</span>)
+  </button>
+  <button class="btn btn-submit" id="mobileSubmitBtn" style="padding: 11px 18px; border-radius: 12px;" onclick="submitExam()">
+    ✅ Nộp bài
+  </button>
+</div>
+
+<script>
+  // =========================================================================
+  // CẤU HÌNH ĐỀ SỐ 2 & LINK VIDEO GIẢI CHI TIẾT
+  // =========================================================================
+  const EXAM_CONFIG = {
+    badge: "Vật Lý 12 • Giữa Học Kì 1",
+    examTitle: "KIỂM TRA THỬ VẬT LÝ - ĐỀ SỐ 2",
+    headerShortTitle: "KIỂM TRA THỬ VẬT LÝ - ĐỀ 2",
+    examCode: "002",
+    subject: "Vật Lý 12",
+    durationMinutes: 50,
+    questionTag: "[VNA]",
+
+    // LINK VIDEO GIẢI ĐỀ SỐ 2 HIỂN THỊ SAU KHI NỘP BÀI
+    videoSolution: {
+      enabled: true,
+      url: "https://www.youtube.com/watch?v=YUa4zi1m6j4&feature=youtu.be",
+      title: "🎬 VIDEO CHỮA CHI TIẾT ĐỀ SỐ 2",
+      note: "Bạn đã hoàn thành bài thi Đề số 2! Bấm vào nút bên dưới để mở xem video giải chi tiết trên YouTube hoặc bật xem trực tiếp ngay tại trang.",
+      buttonText: "▶️ Mở Xem Video Giải Trên YouTube",
+      extraVideos: []
+    }
+  };
+
+  // =========================================================================
+  // HÌNH ẢNH SVG MINH HỌA CHUẨN THEO ĐỀ SỐ 2
+  // =========================================================================
+  const FIGURES = {
+    p1_q5: `
+      <div class="q-figure">
+        <svg viewBox="0 0 420 185" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="arrP1Q5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e3a8a"/>
+            </marker>
+          </defs>
+          <!-- 3 ô trạng thái -->
+          <rect x="20" y="95" width="96" height="44" rx="10" fill="#dbeafe" stroke="#1d4ed8" stroke-width="2"/>
+          <text x="68" y="122" text-anchor="middle" font-size="15" font-weight="bold" fill="#1e3a8a">Thể rắn</text>
+
+          <rect x="162" y="95" width="96" height="44" rx="10" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+          <text x="210" y="122" text-anchor="middle" font-size="15" font-weight="bold" fill="#0369a1">Thể lỏng</text>
+
+          <rect x="304" y="95" width="96" height="44" rx="10" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+          <text x="352" y="122" text-anchor="middle" font-size="15" font-weight="bold" fill="#b45309">Thể khí</text>
+
+          <!-- Mũi tên (1): Thể rắn -> Thể khí (Thăng hoa) -->
+          <path d="M 68 95 Q 210 15 352 95" fill="none" stroke="#1e3a8a" stroke-width="2" marker-end="url(#arrP1Q5)"/>
+          <text x="210" y="45" text-anchor="middle" font-size="14" font-weight="bold" fill="#dc2626">(1)</text>
+
+          <!-- Mũi tên (3): Thể lỏng -> Thể rắn (Đông đặc) -->
+          <line x1="160" y1="117" x2="120" y2="117" stroke="#1e3a8a" stroke-width="2" marker-end="url(#arrP1Q5)"/>
+          <text x="140" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#dc2626">(3)</text>
+
+          <!-- Mũi tên (2): Thể lỏng -> Thể khí (Hóa hơi) -->
+          <line x1="260" y1="117" x2="300" y2="117" stroke="#1e3a8a" stroke-width="2" marker-end="url(#arrP1Q5)"/>
+          <text x="280" y="108" text-anchor="middle" font-size="14" font-weight="bold" fill="#dc2626">(2)</text>
+        </svg>
+        <div class="q-figure-caption">Hình Câu 5: Sơ đồ các hình thức chuyển thể</div>
+      </div>
+    `,
+    p1_q18: `
+      <div class="q-figure">
+        <svg viewBox="0 0 320 215" xmlns="http://www.w3.org/2000/svg" font-family="Times New Roman, serif">
+          <defs>
+            <marker id="arrP1Q18" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0f172a"/>
+            </marker>
+          </defs>
+          <!-- Trục tọa độ -->
+          <line x1="65" y1="180" x2="65" y2="18" stroke="#0f172a" stroke-width="2" marker-end="url(#arrP1Q18)"/>
+          <line x1="65" y1="180" x2="290" y2="180" stroke="#0f172a" stroke-width="2" marker-end="url(#arrP1Q18)"/>
+          <text x="72" y="25" font-size="16" font-weight="bold">t (°C)</text>
+          <text x="278" y="170" font-size="18" font-weight="bold">τ</text>
+          <text x="45" y="190" font-size="18" font-weight="bold">O</text>
+
+          <!-- Các đường gióng nét đứt -->
+          <line x1="65" y1="145" x2="122" y2="145" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="58" y="150" text-anchor="end" font-size="16">100</text>
+
+          <line x1="65" y1="95" x2="145" y2="95" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="58" y="100" text-anchor="end" font-size="16">232</text>
+
+          <line x1="65" y1="42" x2="262" y2="42" stroke="#0f172a" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <text x="58" y="47" text-anchor="end" font-size="16">320</text>
+
+          <!-- Đường đồ thị -->
+          <path d="M 122 145 L 138 102 Q 141 95 148 95 L 238 95 Q 245 95 248 87 L 262 42" fill="none" stroke="#0f172a" stroke-width="3"/>
+          <circle cx="122" cy="145" r="2.5" fill="#0f172a"/>
+          <circle cx="262" cy="42" r="2.5" fill="#0f172a"/>
+        </svg>
+        <div class="q-figure-caption">Hình Câu 18: Đồ thị sự tăng nhiệt độ theo thời gian của một chất rắn kết tinh</div>
+      </div>
+    `,
+    p2_q1: `
+      <div class="q-figure">
+        <svg viewBox="0 0 320 210" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="dotsP2Q1" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.3" fill="#1e293b"/>
+              <circle cx="6" cy="6" r="1.3" fill="#1e293b"/>
+            </pattern>
+          </defs>
+          <!-- Thân xilanh -->
+          <rect x="65" y="22" width="110" height="68" fill="url(#dotsP2Q1)"/>
+          <path d="M 225 18 L 65 18 Q 58 18 58 25 L 58 87 Q 58 94 65 94 L 225 94" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round"/>
+          <!-- Pít-tông -->
+          <rect x="175" y="21" width="24" height="70" fill="#64748b"/>
+          <rect x="199" y="48" width="52" height="16" fill="#0f172a"/>
+          <rect x="250" y="34" width="12" height="44" rx="5" fill="#0f172a"/>
+
+          <!-- Ngọn lửa đèn cồn -->
+          <path d="M 122 128 C 110 116, 115 100, 122 95 C 129 100, 134 116, 122 128 Z" fill="#ef4444"/>
+          <line x1="122" y1="128" x2="122" y2="140" stroke="#0f172a" stroke-width="4"/>
+
+          <!-- Thân đèn cồn -->
+          <polygon points="102,138 142,138 152,155 168,155 153,195 91,195 76,155 92,155" fill="none" stroke="#0f172a" stroke-width="4" stroke-linejoin="round"/>
+          <polygon points="81,160 163,160 151,192 93,192" fill="#6366f1"/>
+          <path d="M 122 138 Q 130 158 115 170 Q 100 182 132 190" fill="none" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="q-figure-caption">Hình Phần II - Câu 1: Nung nóng khối khí chứa trong xilanh có pít-tông</div>
+      </div>
+    `,
+    p2_q3: `
+      <div class="q-figure">
+        <svg viewBox="0 0 360 190" xmlns="http://www.w3.org/2000/svg" font-family="Times New Roman, serif">
+          <defs>
+            <marker id="arrP2Q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0f172a"/>
+            </marker>
+          </defs>
+          <!-- Trục tọa độ -->
+          <line x1="60" y1="155" x2="60" y2="18" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrP2Q3)"/>
+          <line x1="60" y1="155" x2="320" y2="155" stroke="#0f172a" stroke-width="1.8" marker-end="url(#arrP2Q3)"/>
+          <text x="68" y="25" font-size="16" font-weight="bold">t(°C)</text>
+          <text x="275" y="138" font-size="16" font-weight="bold">τ (phút)</text>
+          <text x="45" y="174" font-size="16">0</text>
+
+          <!-- Mốc nhiệt độ 27 và 327 -->
+          <text x="52" y="135" text-anchor="end" font-size="16">27</text>
+          <text x="52" y="75" text-anchor="end" font-size="16">327</text>
+          <line x1="60" y1="70" x2="165" y2="70" stroke="#0f172a" stroke-width="1.4" stroke-dasharray="4,3"/>
+
+          <!-- Đường gióng thời gian 39 và 64 -->
+          <line x1="165" y1="70" x2="165" y2="155" stroke="#0f172a" stroke-width="1.4" stroke-dasharray="4,3"/>
+          <text x="165" y="175" text-anchor="middle" font-size="16">39</text>
+
+          <line x1="212" y1="70" x2="212" y2="155" stroke="#0f172a" stroke-width="1.4" stroke-dasharray="4,3"/>
+          <text x="212" y="175" text-anchor="middle" font-size="16">64</text>
+
+          <!-- Đường biểu diễn ABCD -->
+          <polyline points="60,130 165,70 212,70 275,36" fill="none" stroke="#0f172a" stroke-width="2.5"/>
+          <circle cx="60" cy="130" r="2.5" fill="#0f172a"/>
+          <circle cx="165" cy="70" r="2.5" fill="#0f172a"/>
+          <circle cx="212" cy="70" r="2.5" fill="#0f172a"/>
+          <circle cx="275" cy="36" r="2.5" fill="#0f172a"/>
+
+          <text x="72" y="142" font-size="16">A</text>
+          <text x="160" y="60" font-size="16">B</text>
+          <text x="208" y="60" font-size="16">C</text>
+          <text x="268" y="26" font-size="16">D</text>
+        </svg>
+        <div class="q-figure-caption">Hình Phần II - Câu 3: Đồ thị sự phụ thuộc nhiệt độ của khối chất rắn theo thời gian đun</div>
+      </div>
+    `,
+    p3_q3: `
+      <div class="q-figure">
+        <svg viewBox="0 0 300 235" xmlns="http://www.w3.org/2000/svg" font-family="Times New Roman, serif">
+          <defs>
+            <marker id="arrP3Q3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 10 5 L 0 8.5 z" fill="#0f172a"/>
+            </marker>
+          </defs>
+          <!-- Lưới ô vuông 6 cột x 6 hàng (mỗi ô 26x26 px, gốc O tại (65, 190)) -->
+          <g stroke="#64748b" stroke-width="1" stroke-dasharray="4,3">
+            <!-- Đường ngang (y = 164, 138, 112, 86, 60, 34) -->
+            <line x1="65" y1="164" x2="221" y2="164"/>
+            <line x1="65" y1="138" x2="221" y2="138"/>
+            <line x1="65" y1="112" x2="221" y2="112"/>
+            <line x1="65" y1="86" x2="221" y2="86"/>
+            <line x1="65" y1="60" x2="221" y2="60"/>
+            <line x1="65" y1="34" x2="221" y2="34"/>
+            <!-- Đường dọc (x = 91, 117, 143, 169, 195, 221) -->
+            <line x1="91" y1="34" x2="91" y2="190"/>
+            <line x1="117" y1="34" x2="117" y2="190"/>
+            <line x1="143" y1="34" x2="143" y2="190"/>
+            <line x1="169" y1="34" x2="169" y2="190"/>
+            <line x1="195" y1="34" x2="195" y2="190"/>
+            <line x1="221" y1="34" x2="221" y2="190"/>
+          </g>
+
+          <!-- Trục tọa độ -->
+          <line x1="65" y1="190" x2="65" y2="18" stroke="#0f172a" stroke-width="2" marker-end="url(#arrP3Q3)"/>
+          <line x1="65" y1="190" x2="245" y2="190" stroke="#0f172a" stroke-width="2" marker-end="url(#arrP3Q3)"/>
+          <text x="74" y="24" font-size="16" font-weight="bold">t (°C)</text>
+          <text x="225" y="175" font-size="16" font-weight="bold">τ (s)</text>
+          <text x="45" y="212" font-size="17">O</text>
+
+          <!-- Mốc 15°C (ở hàng lưới thứ 3: y = 112) và 40s (ở cột lưới thứ 4: x = 169) -->
+          <text x="55" y="117" text-anchor="end" font-size="17">15</text>
+          <text x="169" y="212" text-anchor="middle" font-size="17">40</text>
+
+          <!-- Đồ thị đường thẳng đi qua (0s; 15°C) -> (40s; 25°C ở hàng lưới thứ 5: y = 60) -> (60s; 30°C ở hàng 6: y = 34) -->
+          <line x1="65" y1="112" x2="221" y2="34" stroke="#0f172a" stroke-width="2.5"/>
+
+          <!-- Các điểm đánh dấu đậm như hình gốc -->
+          <circle cx="65" cy="190" r="3.5" fill="#0f172a"/>
+          <circle cx="65" cy="112" r="3.8" fill="#0f172a"/>
+          <circle cx="169" cy="190" r="3.5" fill="#0f172a"/>
+          <circle cx="169" cy="60" r="3.8" fill="#0f172a"/>
+        </svg>
+        <div class="q-figure-caption">Hình Phần III - Câu 3: Đồ thị sự phụ thuộc nhiệt độ vào thời gian đun một ấm nước</div>
+      </div>
+    `,
+    p3_q5: `
+      <div class="q-figure wide-svg">
+        <svg viewBox="0 0 460 215" xmlns="http://www.w3.org/2000/svg" font-family="Times New Roman, serif">
+          <!-- HÌNH A: Mạng tinh thể gồm các ô lập phương xếp chồng -->
+          <g transform="translate(20, 15)">
+            <!-- Lớp sau (z=2) -->
+            <g stroke="#0f172a" stroke-width="1.3" stroke-dasharray="3,3" fill="none">
+              <rect x="44" y="10" width="110" height="110"/>
+              <line x1="99" y1="10" x2="99" y2="120"/>
+              <line x1="44" y1="65" x2="154" y2="65"/>
+              <!-- Lớp giữa (z=1) -->
+              <rect x="24" y="30" width="110" height="110"/>
+              <line x1="79" y1="30" x2="79" y2="140"/>
+              <line x1="24" y1="85" x2="134" y2="85"/>
+              <!-- Các cạnh nối sâu -->
+              <line x1="4" y1="105" x2="44" y2="65"/>
+              <line x1="59" y1="105" x2="99" y2="65"/>
+              <line x1="59" y1="50" x2="99" y2="10"/>
+              <line x1="59" y1="160" x2="99" y2="120"/>
+              <line x1="4" y1="160" x2="44" y2="120"/>
+            </g>
+            <!-- Mặt trước & mặt trên, phải nét liền -->
+            <g stroke="#0f172a" stroke-width="1.6" fill="none">
+              <rect x="4" y="50" width="110" height="110"/>
+              <line x1="59" y1="50" x2="59" y2="160"/>
+              <line x1="4" y1="105" x2="114" y2="105"/>
+              <polyline points="4,50 44,10 154,10 154,120 114,160"/>
+              <line x1="114" y1="50" x2="154" y2="10"/>
+              <line x1="59" y1="50" x2="99" y2="10"/>
+              <line x1="24" y1="30" x2="134" y2="30"/>
+              <line x1="134" y1="30" x2="134" y2="140"/>
+              <line x1="114" y1="105" x2="154" y2="65"/>
+            </g>
+            <!-- Các nút mạng (27 nút) -->
+            <g fill="#0f172a">
+              <!-- Lớp trước -->
+              <circle cx="4" cy="50" r="4.5"/><circle cx="59" cy="50" r="4.5"/><circle cx="114" cy="50" r="4.5"/>
+              <circle cx="4" cy="105" r="4.5"/><circle cx="59" cy="105" r="4.5"/><circle cx="114" cy="105" r="4.5"/>
+              <circle cx="4" cy="160" r="4.5"/><circle cx="59" cy="160" r="4.5"/><circle cx="114" cy="160" r="4.5"/>
+              <!-- Lớp giữa -->
+              <circle cx="24" cy="30" r="4.5"/><circle cx="79" cy="30" r="4.5"/><circle cx="134" cy="30" r="4.5"/>
+              <circle cx="24" cy="85" r="4.5"/><circle cx="79" cy="85" r="4.5"/><circle cx="134" cy="85" r="4.5"/>
+              <circle cx="24" cy="140" r="4.5"/><circle cx="79" cy="140" r="4.5"/><circle cx="134" cy="140" r="4.5"/>
+              <!-- Lớp sau -->
+              <circle cx="44" cy="10" r="4.5"/><circle cx="99" cy="10" r="4.5"/><circle cx="154" cy="10" r="4.5"/>
+              <circle cx="44" cy="65" r="4.5"/><circle cx="99" cy="65" r="4.5"/><circle cx="154" cy="65" r="4.5"/>
+              <circle cx="44" cy="120" r="4.5"/><circle cx="99" cy="120" r="4.5"/><circle cx="154" cy="120" r="4.5"/>
+            </g>
+            <text x="79" y="192" text-anchor="middle" font-size="15">Hình a</text>
+          </g>
+
+          <!-- HÌNH B: Ô mạng cơ sở lập phương tâm khối cạnh a -->
+          <g transform="translate(245, 15)">
+            <!-- Cạnh khuất và đường chéo không gian nét đứt -->
+            <g stroke="#0f172a" stroke-width="1.4" stroke-dasharray="4,3" fill="none">
+              <line x1="45" y1="20" x2="45" y2="120"/>
+              <line x1="45" y1="120" x2="145" y2="120"/>
+              <line x1="10" y1="155" x2="45" y2="120"/>
+              <!-- Đường chéo qua tâm (77.5, 87.5) -->
+              <line x1="10" y1="55" x2="145" y2="120"/>
+              <line x1="110" y1="55" x2="45" y2="120"/>
+              <line x1="45" y1="20" x2="110" y2="155"/>
+              <line x1="145" y1="20" x2="10" y2="155"/>
+            </g>
+            <!-- Cạnh nhìn thấy nét liền -->
+            <g stroke="#0f172a" stroke-width="1.7" fill="none">
+              <rect x="10" y="55" width="100" height="100"/>
+              <polyline points="10,55 45,20 145,20 145,120 110,155"/>
+              <line x1="110" y1="55" x2="145" y2="20"/>
+            </g>
+            <!-- 8 nguyên tử ở đỉnh + 1 nguyên tử ở tâm -->
+            <g fill="#0f172a">
+              <circle cx="10" cy="55" r="5.5"/><circle cx="110" cy="55" r="5.5"/>
+              <circle cx="10" cy="155" r="5.5"/><circle cx="110" cy="155" r="5.5"/>
+              <circle cx="45" cy="20" r="5.5"/><circle cx="145" cy="20" r="5.5"/>
+              <circle cx="45" cy="120" r="5.5"/><circle cx="145" cy="120" r="5.5"/>
+              <circle cx="77.5" cy="87.5" r="6"/>
+            </g>
+            <text x="95" y="13" text-anchor="middle" font-size="16">a</text>
+            <text x="156" y="75" font-size="16">a</text>
+            <text x="77" y="192" text-anchor="middle" font-size="15">Hình b</text>
+          </g>
+        </svg>
+        <div class="q-figure-caption">Hình Phần III - Câu 5: Mạng tinh thể (Hình a) và ô mạng cơ sở lập phương tâm khối (Hình b)</div>
+      </div>
+    `
+  };
+
+  // =========================================================================
+  // DỮ LIỆU ĐỀ SỐ 2 - VẬT LÝ 12 (28 CÂU CHUẨN THEO ĐỀ GỐC)
+  // =========================================================================
+  const PART1_QUESTIONS = [
+    {
+      id: 1,
+      q: "Các nhiệt kế thường dùng như nhiệt kế rượu, nhiệt kế thủy ngân, được chế tạo dựa trên",
+      options: [
+        "sự nở vì nhiệt của ống thủy tinh chứa chất lỏng.",
+        "sự nở vì nhiệt của chất lỏng trong ống thủy tinh.",
+        "sự nở dài của một thanh kim loại thẳng.",
+        "sự nở vì nhiệt của thể tích một lượng khí xác định ở áp suất không đổi."
+      ],
+      ans: 1,
+      explain: "Nhiệt kế chất lỏng (nhiệt kế rượu, nhiệt kế thủy ngân) hoạt động dựa trên hiện tượng <b>sự nở vì nhiệt của chất lỏng</b> bên trong ống thủy tinh."
+    },
+    {
+      id: 2,
+      q: "Nội năng của vật nào tăng nhiều nhất khi ta thả rơi bốn vật có cùng thể tích (đặc) từ cùng một độ cao xuống đất? Coi như toàn bộ độ giảm cơ năng chuyển hết thành nội năng của vật.",
+      options: [
+        "Vật bằng cao su.",
+        "Vật bằng nhôm.",
+        "Vật bằng xốp.",
+        "Vật bằng sắt."
+      ],
+      ans: 3,
+      explain: "Độ tăng nội năng bằng độ giảm cơ năng: $\\Delta U = mgh = \\rho Vgh$. Vì 4 vật có cùng thể tích $V$ và rơi từ cùng độ cao $h$, vật bằng <b>sắt</b> có khối lượng riêng $\\rho$ lớn nhất nên khối lượng $m$ lớn nhất $\\Rightarrow$ nội năng tăng nhiều nhất."
+    },
+    {
+      id: 3,
+      q: "Mô hình động học phân tử về cấu tạo chất <b>không</b> đề cập đến nội dung nào sau đây?",
+      options: [
+        "Các chất được cấu tạo từ các hạt riêng biệt là phân tử.",
+        "Các phân tử chuyển động không ngừng.",
+        "Các phân tử không tương tác với nhau.",
+        "Nhiệt độ của vật càng cao thì tốc độ chuyển động của các phân tử cấu tạo nên vật càng lớn."
+      ],
+      ans: 2,
+      explain: "Theo mô hình động học phân tử, giữa các phân tử cấu tạo nên vật luôn có lực tương tác (lực hút và lực đẩy phân tử). Do đó phát biểu <i>\"Các phân tử không tương tác với nhau\"</i> là sai."
+    },
+    {
+      id: 4,
+      q: "Nhiệt độ không tuyệt đối ($0\\text{ K}$) là nhiệt độ mà tại đó các phân tử có động năng chuyển động nhiệt",
+      options: [
+        "bằng không và thế năng tương tác giữa chúng là cực đại.",
+        "cực đại và thế năng tương tác giữa chúng là cực đại.",
+        "bằng không và thế năng tương tác giữa chúng là tối thiểu.",
+        "cực đại và thế năng tương tác giữa chúng là bằng không."
+      ],
+      ans: 2,
+      explain: "Ở độ không tuyệt đối ($0\\text{ K}$), động năng chuyển động nhiệt của các phân tử bằng không và thế năng tương tác giữa chúng đạt giá trị tối thiểu."
+    },
+    {
+      id: 5,
+      q: "Cho sơ đồ các hình thức chuyển thể như bên dưới. Kết luận nào sau đây là đúng?",
+      figure: FIGURES.p1_q5,
+      options: [
+        "(2) là quá trình ngưng kết.",
+        "(1) là quá trình nóng chảy.",
+        "(2) là quá trình hóa hơi.",
+        "(3) là quá trình ngưng tụ."
+      ],
+      ans: 2,
+      explain: "Từ sơ đồ: quá trình (2) là sự chuyển từ <b>thể lỏng sang thể khí (hơi)</b> nên (2) là quá trình <b>hóa hơi</b>."
+    },
+    {
+      id: 6,
+      q: "Cặp nhiệt độ được chọn làm mốc trong thang đo nhiệt độ Kelvin là",
+      options: [
+        "độ không tuyệt đối và nhiệt độ nước đóng băng.",
+        "nhiệt độ nước đóng băng và nhiệt độ sôi của nước tinh khiết.",
+        "nhiệt độ nước đóng băng và nhiệt độ điểm ba của nước.",
+        "độ không tuyệt đối và nhiệt độ điểm ba của nước."
+      ],
+      ans: 3,
+      explain: "Thang nhiệt độ Kelvin chọn hai mốc là: <b>độ không tuyệt đối</b> ($0\\text{ K}$) và <b>nhiệt độ điểm ba của nước tinh khiết</b> ($273,16\\text{ K}$)."
+    },
+    {
+      id: 7,
+      q: "Nhiệt độ cơ thể người là $37^\\circ\\text{C}$ sẽ tương ứng với nhiệt độ bao nhiêu trong thang đo nhiệt độ Kelvin?",
+      options: ["$310\\text{ K}$.", "$300\\text{ K}$.", "$236\\text{ K}$.", "$210\\text{ K}$."],
+      ans: 0,
+      explain: "Áp dụng công thức chuyển đổi: $T(\\text{K}) = t(^\\circ\\text{C}) + 273 = 37 + 273 = 310\\text{ K}$."
+    },
+    {
+      id: 8,
+      q: "Nội năng của một hệ là",
+      options: [
+        "tổng động năng và thế năng tương tác của các phân tử cấu tạo nên hệ.",
+        "tổng công và nhiệt mà hệ truyền ra bên ngoài.",
+        "tổng động năng và thế năng của hệ.",
+        "tổng công và nhiệt mà hệ nhận được từ bên ngoài."
+      ],
+      ans: 0,
+      explain: "Nội năng của một hệ là tổng động năng chuyển động nhiệt của các phân tử và thế năng tương tác giữa các phân tử cấu tạo nên hệ."
+    },
+    {
+      id: 9,
+      q: "Trong chuyển động nhiệt, các phân tử chất lỏng",
+      options: [
+        "chuyển động tự do về mọi phía.",
+        "dao động quanh vị trí cân bằng luôn luôn thay đổi.",
+        "chuyển động hỗn loạn.",
+        "dao động quanh vị trí cân bằng cố định."
+      ],
+      ans: 1,
+      explain: "Các phân tử chất lỏng dao động xung quanh các vị trí cân bằng không cố định (vị trí cân bằng luôn thay đổi)."
+    },
+    {
+      id: 10,
+      q: "Với cùng một chất, quá trình chuyển thể nào sau đây sẽ làm giảm lực tương tác giữa các phân tử nhiều nhất?",
+      options: ["Nóng chảy.", "Ngưng tụ.", "Đông đặc.", "Hóa hơi."],
+      ans: 3,
+      explain: "Khi chất chuyển từ thể lỏng sang thể khí (<b>hóa hơi</b>), khoảng cách giữa các phân tử tăng lên rất lớn nên lực tương tác giữa các phân tử giảm đi nhiều nhất."
+    },
+    {
+      id: 11,
+      q: "Sự hóa hơi xảy ra trên bề mặt chất lỏng gọi là",
+      options: ["sự nóng chảy.", "sự bay hơi.", "sự đông đặc.", "sự sôi."],
+      ans: 1,
+      explain: "Sự hóa hơi xảy ra trên bề mặt thoáng của chất lỏng ở nhiệt độ bất kì gọi là <b>sự bay hơi</b>."
+    },
+    {
+      id: 12,
+      q: "Gọi $A$ và $Q$ lần lượt là tổng công và nhiệt lượng mà hệ nhận được, $\\Delta U$ là độ biến thiên nội năng của hệ. Công thức nào sau đây mô tả định luật I nhiệt động lực học?",
+      options: ["$A + Q = 0$.", "$\\Delta U = Q$.", "$\\Delta U = A$.", "$\\Delta U = A + Q$."],
+      ans: 3,
+      explain: "Hệ thức của định luật I nhiệt động lực học: $\\Delta U = A + Q$."
+    },
+    {
+      id: 13,
+      q: "Câu nào sau đây nói về nội năng là <b>không đúng</b>?",
+      options: [
+        "Nội năng là một dạng năng lượng.",
+        "Nội năng là nhiệt lượng.",
+        "Nội năng của một vật có thể tăng lên hoặc giảm đi.",
+        "Nội năng có thể chuyển hóa thành các dạng năng lượng khác."
+      ],
+      ans: 1,
+      explain: "Nội năng không phải là nhiệt lượng. Nhiệt lượng chỉ là số đo độ biến thiên nội năng trong quá trình truyền nhiệt."
+    },
+    {
+      id: 14,
+      q: "Khi nói về quá trình truyền nhiệt lượng khi cho hai vật tiếp xúc với nhau. Kết luận nào sau đây là <b>sai</b>?",
+      options: [
+        "Năng lượng nhiệt được truyền từ vật có nội năng lớn hơn sang vật có nội năng nhỏ hơn.",
+        "Vật nóng hơn sẽ giảm nhiệt độ, vật lạnh hơn sẽ tăng nhiệt độ.",
+        "Khi hai vật ở cùng nhiệt độ, không có truyền năng lượng nhiệt giữa chúng.",
+        "Năng lượng nhiệt được truyền từ vật nóng hơn sang vật lạnh hơn."
+      ],
+      ans: 0,
+      explain: "Nhiệt lượng tự truyền từ vật có <b>nhiệt độ cao hơn</b> sang vật có <b>nhiệt độ thấp hơn</b>, chứ không phải từ vật có nội năng lớn hơn sang vật có nội năng nhỏ hơn."
+    },
+    {
+      id: 15,
+      q: "Khi các nguyên tử, phân tử cấu tạo nên vật chuyển động nhanh lên thì đại lượng nào sau đây tăng lên?",
+      options: [
+        "Thế năng của vật tăng lên.",
+        "Khối lượng của vật.",
+        "Động năng của vật tăng lên.",
+        "Nhiệt độ của vật."
+      ],
+      ans: 3,
+      explain: "Nhiệt độ của vật là số đo động năng chuyển động nhiệt trung bình của các phân tử. Khi các phân tử chuyển động nhanh lên thì <b>nhiệt độ của vật</b> tăng lên."
+    },
+    {
+      id: 16,
+      q: "Khi nói về thang đo nhiệt độ Kelvin và Celsius, kết luận nào sau đây là <b>sai</b>?",
+      options: [
+        "Mối liên hệ về các giá trị nhiệt độ giữa hai thang đo là $T(\\text{K}) = t(^\\circ\\text{C}) + 273,15$.",
+        "Nhiệt độ trong thang nhiệt độ Kelvin được kí hiệu là $T$, có đơn vị $\\text{K}$.",
+        "Nhiệt độ trong thang nhiệt độ Celsius được kí hiệu $t$, có đơn vị $^\\circ\\text{C}$.",
+        "Một độ chia trên thang nhiệt độ Kelvin có giá trị gấp $273$ lần một độ chia trên thang nhiệt độ Celsius."
+      ],
+      ans: 3,
+      explain: "Một độ chia trên thang nhiệt độ Kelvin có độ lớn <b>bằng</b> một độ chia trên thang nhiệt độ Celsius ($\\Delta T(\\text{K}) = \\Delta t(^\\circ\\text{C})$)."
+    },
+    {
+      id: 17,
+      q: "Thể tích của một lượng khí khi bị nung nóng đã tăng thêm $0,02\\text{ m}^3$, còn nội năng của khí tăng một lượng $4280\\text{ J}$. Xem như áp suất trong suốt quá trình trên là không đổi và bằng $1,5\\cdot 10^5\\text{ Pa}$. Nhiệt lượng đã truyền cho khối khí trong quá trình trên là",
+      options: ["$1280\\text{ J}$.", "$4280\\text{ J}$.", "$3000\\text{ J}$.", "$7280\\text{ J}$."],
+      ans: 3,
+      explain: "Khí dãn nở đẳng áp sinh công: $A = -p\\Delta V = -1,5\\cdot 10^5 \\cdot 0,02 = -3000\\text{ J}$.<br>Theo định luật I NĐLH: $\\Delta U = A + Q \\Rightarrow Q = \\Delta U - A = 4280 - (-3000) = 7280\\text{ J}$."
+    },
+    {
+      id: 18,
+      q: "Đồ thị hình bên dưới thể hiện quá trình tăng nhiệt độ theo thời gian của một chất rắn kết tinh khi được nung nóng. Nhiệt độ nóng chảy của chất rắn là",
+      figure: FIGURES.p1_q18,
+      options: ["$210^\\circ\\text{C}$.", "$100^\\circ\\text{C}$.", "$320^\\circ\\text{C}$.", "$232^\\circ\\text{C}$."],
+      ans: 3,
+      explain: "Trong suốt quá trình nóng chảy của chất rắn kết tinh, nhiệt độ của chất không đổi (đoạn nằm ngang trên đồ thị ứng với $t = 232^\\circ\\text{C}$)."
+    }
+  ];
+
+  const PART2_QUESTIONS = [
+    {
+      id: 1,
+      q: "Khi nung nóng một khối khí chứa trong một xilanh có pit-tông đóng kín làm cho nhiệt độ của khối khí tăng. Pit-tông này có thể dịch chuyển không ma sát trong xilanh.",
+      figure: FIGURES.p2_q1,
+      items: [
+        { label: "a", text: "Nhiệt độ của khối khí trong xilanh thay đổi do quá trình truyền nhiệt.", ans: true },
+        { label: "b", text: "Khi cho pit-tông chuyển động tự do để khối khí dãn nở với áp suất không đổi, lúc này khối khí đã sinh công.", ans: true },
+        { label: "c", text: "Khi giữ pit-tông để thể tích khí không đổi thì toàn bộ nhiệt lượng khối khí nhận được dùng để tăng nội năng của khí (khối khí không tỏa nhiệt).", ans: true },
+        { label: "d", text: "Khi nhận nhiệt, động năng của các phân tử là không đổi.", ans: false }
+      ],
+      explain: `
+        • <b>Ý a) Đúng:</b> Khối khí được đun nóng bằng ngọn lửa đèn cồn nên nhận năng lượng thông qua quá trình truyền nhiệt.<br>
+        • <b>Ý b) Đúng:</b> Khối khí dãn nở đẩy pit-tông dịch chuyển nên khối khí thực hiện công (sinh công).<br>
+        • <b>Ý c) Đúng:</b> Khi giữ pit-tông cố định ($\\Delta V = 0 \\Rightarrow A = 0$), theo định luật I NĐLH ta có $\\Delta U = Q$, toàn bộ nhiệt lượng nhận được chuyển thành độ tăng nội năng của khí.<br>
+        • <b>Ý d) Sai:</b> Khi nhận nhiệt và nhiệt độ khối khí tăng lên thì động năng chuyển động nhiệt trung bình của các phân tử khí tăng lên.
+      `
+    },
+    {
+      id: 2,
+      q: "Giả sử một học sinh tạo ra một nhiệt kế sử dụng một thang nhiệt độ mới cho riêng mình, gọi là thang nhiệt độ Z, có đơn vị là $^\\circ\\text{Z}$. Trong đó, nhiệt độ của nước đá đang tan ở $1\\text{ atm}$ là $x\\ ^\\circ\\text{Z}$ và nhiệt độ nước sôi ở $1\\text{ atm}$ là $y\\ ^\\circ\\text{Z}$. Từ vạch $x\\ ^\\circ\\text{Z}$ đến vạch $y\\ ^\\circ\\text{Z}$ được chia thành $180$ khoảng, mỗi khoảng ứng với $1^\\circ\\text{Z}$.",
+      items: [
+        { label: "a", text: "Một độ chia trên thang nhiệt độ Z bằng $1,8$ lần độ chia trên thang nhiệt độ Celsius.", ans: false },
+        { label: "b", text: "Mối liên hệ giữa $x$ và $y$ là: $y = x + 180$.", ans: true },
+        { label: "c", text: "Độ biến thiên nhiệt độ $18^\\circ\\text{C}$ trong thang nhiệt độ Celsius bằng với độ biến thiên nhiệt độ $10^\\circ\\text{Z}$ trong thang nhiệt độ Z.", ans: false },
+        { label: "d", text: "Nếu nhiệt độ cơ thể người là $37^\\circ\\text{C}$ tương ứng với $86,6^\\circ\\text{Z}$ thì giá trị của $x$ là $20$.", ans: true }
+      ],
+      explain: `
+        • <b>Ý a) Sai:</b> Khoảng cách từ nhiệt độ nước đá đang tan đến nhiệt độ nước sôi là $100^\\circ\\text{C}$ ứng với $180^\\circ\\text{Z}$, nên $1\\text{ độ chia }^\\circ\\text{Z} = \\frac{100}{180} = \\frac{1}{1,8}\\text{ độ chia }^\\circ\\text{C}$ (nhỏ hơn $1,8$ lần).<br>
+        • <b>Ý b) Đúng:</b> Từ $x\\ ^\\circ\\text{Z}$ đến $y\\ ^\\circ\\text{Z}$ có $180$ khoảng chia $1^\\circ\\text{Z}$ nên $y - x = 180 \\Rightarrow y = x + 180$.<br>
+        • <b>Ý c) Sai:</b> Độ biến thiên $\\Delta t_C = 18^\\circ\\text{C}$ ứng với $\\Delta t_Z = 1,8 \\times 18 = 32,4^\\circ\\text{Z}$ (còn $\\Delta t_C = 10^\\circ\\text{C}$ mới ứng với $18^\\circ\\text{Z}$).<br>
+        • <b>Ý d) Đúng:</b> Công thức chuyển đổi: $t_Z = x + 1,8t_C$. Thay $t_C = 37^\\circ\\text{C},\\ t_Z = 86,6^\\circ\\text{Z} \\Rightarrow 86,6 = x + 1,8\\times 37 = x + 66,6 \\Rightarrow x = 20$.
+      `
+    },
+    {
+      id: 3,
+      q: "Khi tiến hành đun nóng một chất rắn kết tinh bằng một bếp có công suất không đổi. Bỏ qua sự mất mát nhiệt lượng ra môi trường. Kể từ lúc bắt đầu đun người ta ghi nhận được đồ thị sự phụ thuộc của nhiệt độ của khối chất và thời gian đun như hình bên dưới.",
+      figure: FIGURES.p2_q3,
+      items: [
+        { label: "a", text: "Nhiệt độ nóng chảy của chất rắn trên là $327^\\circ\\text{C}$.", ans: true },
+        { label: "b", text: "Kể từ lúc bắt đầu đun, nhiệt lượng cần để chất rắn tăng lên đến nhiệt độ nóng chảy gấp $1,56$ lần nhiệt lượng cần cung cấp trong suốt giai đoạn nóng chảy.", ans: true },
+        { label: "c", text: "Đoạn AB trên đồ thị thể hiện quá trình chất rắn đang nóng chảy.", ans: false },
+        { label: "d", text: "Tại phút thứ 39 chất rắn đã nóng chảy hoàn toàn.", ans: false }
+      ],
+      explain: `
+        • <b>Ý a) Đúng:</b> Đoạn nằm ngang BC ứng với quá trình nóng chảy ở nhiệt độ không đổi $327^\\circ\\text{C}$.<br>
+        • <b>Ý b) Đúng:</b> Vì công suất bếp không đổi nên nhiệt lượng cung cấp tỉ lệ thuận với thời gian đun ($Q = P\\Delta \\tau$). Giai đoạn tăng nhiệt độ AB mất $\\Delta \\tau_1 = 39\\text{ phút}$; giai đoạn nóng chảy BC mất $\\Delta \\tau_2 = 64 - 39 = 25\\text{ phút}$. Tỉ số nhiệt lượng: $\\frac{Q_{AB}}{Q_{BC}} = \\frac{39}{25} = 1,56$.<br>
+        • <b>Ý c) Sai:</b> Đoạn AB là quá trình đun nóng chất rắn từ $27^\\circ\\text{C}$ lên $327^\\circ\\text{C}$; đoạn BC mới là quá trình chất rắn đang nóng chảy.<br>
+        • <b>Ý d) Sai:</b> Tại phút thứ 39 (điểm B) chất rắn mới <b>bắt đầu</b> nóng chảy, đến phút thứ 64 (điểm C) chất rắn mới nóng chảy hoàn toàn.
+      `
+    },
+    {
+      id: 4,
+      q: "Mô hình động học phân tử về cấu tạo chất có những nội dung cơ bản như sau:",
+      items: [
+        { label: "a", text: "Mô hình động học phân tử được xây dựng dựa trên quan điểm là các chất có cấu tạo gián đoạn.", ans: true },
+        { label: "b", text: "Khi nhiệt độ cao các phân tử sẽ chuyển động, khi nhiệt độ thấp các phân tử sẽ đứng yên.", ans: false },
+        { label: "c", text: "Các chất được cấu tạo từ các hạt riêng biệt gọi là phân tử.", ans: true },
+        { label: "d", text: "Giữa các phân tử có lực hút và lực đẩy gọi chung là lực liên kết phân tử.", ans: true }
+      ],
+      explain: `
+        • <b>Ý a), c), d) Đúng</b> theo nội dung cơ bản của thuyết động học phân tử.<br>
+        • <b>Ý b) Sai:</b> Các phân tử cấu tạo nên vật luôn chuyển động hỗn loạn không ngừng ở mọi nhiệt độ (nhiệt độ càng cao thì chuyển động càng nhanh).
+      `
+    }
+  ];
+
+  const PART3_QUESTIONS = [
+    {
+      id: 1,
+      q: "Một lượng khí được truyền $10\\text{ kJ}$ nhiệt năng để nóng lên, đồng thời khối khí giãn nở và thực hiện một công $8\\text{ kJ}$. Độ biến thiên nội năng của khối khí theo đơn vị kilojun ($\\text{kJ}$) là bao nhiêu?",
+      ans: 2,
+      displayAns: "2",
+      explain: "Khối khí nhận nhiệt $Q = 10\\text{ kJ}$ và thực hiện công $A = -8\\text{ kJ}$.<br>Độ biến thiên nội năng: $\\Delta U = Q + A = 10 + (-8) = 2\\text{ kJ}$."
+    },
+    {
+      id: 2,
+      q: "Một số nước trên thế giới sử dụng thang đo nhiệt độ Fahrenheit. Trong thang nhiệt độ này (ở áp suất tiêu chuẩn) nhiệt độ của nước đá đang tan là $32^\\circ\\text{F}$, của nước đang sôi là $212^\\circ\\text{F}$. Công thức chuyển đổi giữa thang đo Fahrenheit và thang đo Celsius là: $t(^\\circ\\text{F}) = 32 + 1,8\\cdot t(^\\circ\\text{C})$. Nhiệt độ bằng bao nhiêu thì giá trị nhiệt độ trên hai thang đo là bằng nhau?",
+      ans: -40,
+      displayAns: "-40",
+      explain: "Gọi $t$ là giá trị nhiệt độ khi hai thang đo bằng nhau: $t = 32 + 1,8t \\Rightarrow -0,8t = 32 \\Rightarrow t = -40$ ($-40^\\circ\\text{C} = -40^\\circ\\text{F}$)."
+    },
+    {
+      id: 3,
+      q: "Hình bên dưới là đồ thị biểu diễn sự phụ thuộc của nhiệt độ vào thời gian đun một ấm nước ở áp suất tiêu chuẩn. Nếu nhiệt lượng mà bếp tỏa ra không thay đổi trong suốt thời gian đun thì sau bao nhiêu giây kể từ lúc bắt đầu đun nước sẽ sôi?",
+      figure: FIGURES.p3_q3,
+      ans: 340,
+      displayAns: "340",
+      explain: "Quan sát lưới ô vuông trên đồ thị:<br>• Tại $\\tau = 0$, nhiệt độ ban đầu $t_0 = 15^\\circ\\text{C}$ ứng với $3$ ô lưới dọc $\\Rightarrow$ mỗi ô lưới dọc ứng với $5^\\circ\\text{C}$.<br>• Tại $\\tau = 40\\text{ s}$, đồ thị đi qua nút lưới ở độ cao $5$ ô dọc, tức là $t = 5 \\times 5 = 25^\\circ\\text{C}$.<br>• Như vậy cứ $40\\text{ s}$ thì nhiệt độ nước tăng thêm $\\Delta t = 25 - 15 = 10^\\circ\\text{C}$ (tốc độ tăng $0,25^\\circ\\text{C/s}$).<br>• Để nước sôi ở $100^\\circ\\text{C}$, nhiệt độ cần tăng thêm $100 - 15 = 85^\\circ\\text{C}$. Thời gian đun tổng cộng là: $\\tau = \\frac{85}{0,25} = 340\\text{ s}$."
+    },
+    {
+      id: 4,
+      q: "Nhiệt lượng tỏa ra hay thu vào của một khối lượng chất $m$ trong quá trình truyền nhiệt được cho bởi hệ thức: $Q = mc\\Delta t$; trong đó $c$ là một hằng số phụ thuộc vào cấu tạo của chất, $\\Delta t$ là độ thay đổi nhiệt độ. Biết nhiệt độ ban đầu của nước sôi là $100^\\circ\\text{C}$ và của nước lạnh là $20^\\circ\\text{C}$. Bỏ qua sự trao đổi nhiệt của nước, của bình với môi trường xung quanh. Xác định nhiệt độ (theo đơn vị $^\\circ\\text{C}$) của hỗn hợp nước \"3 sôi, 2 lạnh\" sau khi có sự cân bằng nhiệt?",
+      ans: 68,
+      displayAns: "68",
+      explain: "Phương trình cân bằng nhiệt khi pha 3 phần nước sôi ($100^\\circ\\text{C}$) với 2 phần nước lạnh ($20^\\circ\\text{C}$):<br>$$3mc(100 - t) = 2mc(t - 20) \\Rightarrow 300 - 3t = 2t - 40 \\Rightarrow 5t = 340 \\Rightarrow t = 68^\\circ\\text{C}$$"
+    },
+    {
+      id: 5,
+      q: "Bằng các nghiên cứu, người ta phát hiện ra rằng các nguyên tử của nguyên tố X sắp xếp tuần hoàn tạo thành mạng tinh thể gồm các ô hình lập phương giống hệt nhau xếp chồng lên nhau (Hình a). Ở mỗi ô lập phương nhỏ nhất (gọi là ô mạng cơ sở) có một nguyên tử nằm tại tâm và ở mỗi đỉnh của nó đều có một nguyên tử (Hình b). Biết rằng chiều dài cạnh của mỗi ô lập phương cơ sở là $a = 2,87\\cdot 10^{-10}\\text{ m}$. Biết khối lượng mỗi nguyên tử X là $9,3\\cdot 10^{-26}\\text{ kg}$. Khối lượng riêng của nguyên tố X là bao nhiêu $\\text{kg/m}^3$? Làm tròn kết quả đến chữ số hàng đơn vị.",
+      figure: FIGURES.p3_q5,
+      ans: 7868,
+      displayAns: "7868",
+      explain: "Trong mỗi ô mạng cơ sở lập phương tâm khối (BCC):<br>• Có $1$ nguyên tử nằm trọn vẹn ở tâm ô.<br>• Có $8$ nguyên tử ở $8$ đỉnh, mỗi đỉnh thuộc chung $8$ ô lập phương lân cận nên đóng góp $8 \\times \\frac{1}{8} = 1$ nguyên tử.<br>$\\Rightarrow$ Số nguyên tử tính riêng cho $1$ ô mạng cơ sở là $n = 1 + 1 = 2$ nguyên tử.<br>Khối lượng riêng của nguyên tố X:<br>$$\\rho = \\frac{n\\cdot m_0}{a^3} = \\frac{2 \\times 9,3\\cdot 10^{-26}}{(2,87\\cdot 10^{-10})^3} \\approx 7868,05\\text{ kg/m}^3 \\approx 7868\\text{ kg/m}^3$$"
+    },
+    {
+      id: 6,
+      q: "Một nhiệt kế gồm phần vỏ thủy tinh và phần chất lỏng bằng rượu. Biết rằng khi nhiệt kế chỉ $20^\\circ\\text{C}$ thì phần chất lỏng trong nhiệt kế có thể tích là $V_0$. Khi nhiệt kế chỉ $40^\\circ\\text{C}$ thì phần rượu trong nhiệt kế có thể tích $V_1 = 1,12V_0$. Khi nhiệt kế chỉ $80^\\circ\\text{C}$ thì phần rượu trong nhiệt kế có thể tích $V_2$. Bỏ qua sự nở vì nhiệt của phần vỏ thủy tinh. Tỉ số $\\frac{V_2}{V_0}$ có giá trị bằng bao nhiêu? Làm tròn kết quả đến chữ số hàng phần trăm.",
+      ans: 1.36,
+      displayAns: "1,36",
+      explain: "Độ tăng thể tích của rượu tỉ lệ thuận với độ tăng nhiệt độ: $\\Delta V = V - V_0 = k(t - 20)$.<br>• Khi $t_1 = 40^\\circ\\text{C}$ ($\\Delta t_1 = 20^\\circ\\text{C}$): $V_1 - V_0 = 0,12V_0$.<br>• Khi $t_2 = 80^\\circ\\text{C}$ ($\\Delta t_2 = 60^\\circ\\text{C} = 3\\Delta t_1$): $V_2 - V_0 = 3 \\times 0,12V_0 = 0,36V_0 \\Rightarrow V_2 = 1,36V_0 \\Rightarrow \\frac{V_2}{V_0} = 1,36$."
+    }
+  ];
+
+  // =========================================================================
+  // TRẠNG THÁI HỆ THỐNG
+  // =========================================================================
+  const TOTAL_SECONDS = EXAM_CONFIG.durationMinutes * 60;
+  let remainingSeconds = TOTAL_SECONDS;
+  let timerInterval = null;
+  let isSubmitted = false;
+  let studentName = "";
+  let studentClass = "";
+
+  const userState = {
+    p1: Array(PART1_QUESTIONS.length).fill(null),
+    p2: Array.from({ length: PART2_QUESTIONS.length }, () => ({ a: null, b: null, c: null, d: null })),
+    p3: Array(PART3_QUESTIONS.length).fill("")
+  };
+
+  function applyExamConfigToUI() {
+    const totalQ = PART1_QUESTIONS.length + PART2_QUESTIONS.length + PART3_QUESTIONS.length;
+    document.title = `${EXAM_CONFIG.examTitle} (${EXAM_CONFIG.durationMinutes} PHÚT)`;
+    document.getElementById('startBadge').textContent = EXAM_CONFIG.badge;
+    document.getElementById('startExamTitle').textContent = EXAM_CONFIG.examTitle;
+    document.getElementById('metaDuration').textContent = `${EXAM_CONFIG.durationMinutes} phút`;
+    document.getElementById('metaTotalQ').textContent = `${totalQ} câu`;
+    document.getElementById('btnStartExam').innerHTML = `🚀 BẮT ĐẦU LÀM BÀI (${EXAM_CONFIG.durationMinutes} PHÚT)`;
+
+    document.getElementById('headerExamTitle').textContent = EXAM_CONFIG.headerShortTitle;
+    document.getElementById('omrExamCode').textContent = EXAM_CONFIG.examCode;
+    document.getElementById('omrSubject').textContent = EXAM_CONFIG.subject;
+    document.getElementById('omrDuration').textContent = `${EXAM_CONFIG.durationMinutes} phút`;
+    document.getElementById('quickKeyHeaderTitle').textContent =
+      `📋 BẢNG ĐÁP ÁN CHUẨN ĐỀ SỐ 2 - MÃ ĐỀ ${EXAM_CONFIG.examCode} (Bấm vào ô bất kỳ để nhảy tới lời giải chi tiết câu đó)`;
+    document.getElementById('filter-all').textContent = `Tất cả câu hỏi (${totalQ})`;
+
+    updateTimerUI();
+  }
+
+  // =========================================================================
+  // XỬ LÝ VIDEO GIẢI CHI TIẾT SAU KHI NỘP BÀI (CHỐNG LỖI 153 YOUTUBE)
+  // =========================================================================
+  function getYouTubeVideoId(url) {
+    if (!url) return null;
+    try {
+      const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts|live)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+      const match = url.match(regExp);
+      return (match && match[1]) ? match[1] : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function buildYouTubeEmbedSrc(videoId, mode) {
+    if (mode === 'proxy') {
+      const ytEmbed = encodeURIComponent(`https://www.youtube.com/embed/${videoId}?rel=0&playsinline=1`);
+      const ytWatch = encodeURIComponent(`https://www.youtube.com/watch?v=${videoId}`);
+      const ytThumb = encodeURIComponent(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`);
+      return `https://cdn.embedly.com/widgets/media.html?src=${ytEmbed}&url=${ytWatch}&image=${ytThumb}&type=text%2Fhtml&schema=youtube`;
+    }
+    const originParam = (window.location.origin && window.location.origin !== 'null' && window.location.protocol.startsWith('http'))
+      ? `&origin=${encodeURIComponent(window.location.origin)}`
+      : '';
+    return `https://www.youtube-nocookie.com/embed/${videoId}?rel=0&playsinline=1${originParam}`;
+  }
+
+  function renderVideoSolutionSection() {
+    const box = document.getElementById('videoSolutionSection');
+    const cfg = EXAM_CONFIG.videoSolution;
+    if (!cfg || !cfg.enabled) {
+      box.style.display = 'none';
+      return;
+    }
+
+    const cleanUrl = (cfg.url || "").trim();
+    const hasUrl = cleanUrl !== "" && cleanUrl !== "#";
+    const videoId = hasUrl ? getYouTubeVideoId(cleanUrl) : null;
+
+    const extraHTML = (cfg.extraVideos && cfg.extraVideos.length > 0)
+      ? `<div class="extra-video-links">
+          ${cfg.extraVideos.map(item => `
+            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="extra-video-pill">
+              ${item.label} ↗
+            </a>
+          `).join('')}
+        </div>`
+      : '';
+
+    box.style.display = 'block';
+    box.innerHTML = `
+      <div class="video-header-row">
+        <div class="video-badge-title">
+          <div class="video-icon-pulse">🎬</div>
+          <div class="video-info-text">
+            <h4>${cfg.title || 'VIDEO CHỮA ĐỀ CHI TIẾT'}</h4>
+            <p>${hasUrl ? (cfg.note || 'Xem video giải chi tiết toàn bộ đề thi tại đây.') : 'Link video giải chi tiết sẽ được cập nhật.'}</p>
+          </div>
+        </div>
+        <div class="video-action-btns">
+          ${hasUrl ? `
+            <a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="btn-watch-video">
+              ${cfg.buttonText || '▶️ Mở Xem Video Giải Chi Tiết'} ↗
+            </a>
+          ` : ''}
+          ${videoId ? `
+            <button type="button" class="btn-toggle-embed" id="btnToggleEmbed" onclick="toggleVideoEmbed('${videoId}')">
+              📺 Xem trực tiếp tại trang
+            </button>
+          ` : ''}
+        </div>
+      </div>
+      ${extraHTML}
+      <div class="video-embed-wrapper" id="videoEmbedWrapper">
+        <div class="video-mode-bar">
+          <span>💡 <b>Mẹo:</b> Nếu trình phát báo lỗi trên thiết bị của bạn, hãy bấm đổi nguồn phát bên cạnh:</span>
+          <div class="video-mode-btns">
+            <button type="button" class="mode-pill" id="modeBtn-proxy" onclick="switchVideoMode('${videoId}', 'proxy')">
+              🛡️ Nguồn phát 1 (Chống lỗi 153 / Mở file trực tiếp)
+            </button>
+            <button type="button" class="mode-pill" id="modeBtn-direct" onclick="switchVideoMode('${videoId}', 'direct')">
+              🌐 Nguồn phát 2 (YouTube Trực tiếp)
+            </button>
+          </div>
+        </div>
+        <div class="video-embed-container" id="videoEmbedBox"></div>
+      </div>
+    `;
+  }
+
+  function switchVideoMode(videoId, mode) {
+    const embedBox = document.getElementById('videoEmbedBox');
+    if (!embedBox || !videoId) return;
+
+    const btnProxy = document.getElementById('modeBtn-proxy');
+    const btnDirect = document.getElementById('modeBtn-direct');
+    if (btnProxy) btnProxy.classList.toggle('active', mode === 'proxy');
+    if (btnDirect) btnDirect.classList.toggle('active', mode === 'direct');
+
+    const src = buildYouTubeEmbedSrc(videoId, mode);
+    embedBox.innerHTML = `
+      <iframe
+        src="${src}"
+        title="Video giải chi tiết"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+        allowfullscreen>
+      </iframe>
+    `;
+  }
+
+  function toggleVideoEmbed(videoId) {
+    const wrapper = document.getElementById('videoEmbedWrapper');
+    const embedBox = document.getElementById('videoEmbedBox');
+    const btn = document.getElementById('btnToggleEmbed');
+    if (!wrapper || !embedBox) return;
+
+    const isVisible = wrapper.style.display === 'block';
+    if (isVisible) {
+      wrapper.style.display = 'none';
+      embedBox.innerHTML = '';
+      if (btn) btn.innerHTML = '📺 Xem trực tiếp tại trang';
+    } else {
+      wrapper.style.display = 'block';
+      if (btn) btn.innerHTML = '🔼 Thu gọn video';
+      switchVideoMode(videoId, 'proxy');
+    }
+  }
+
+  // =========================================================================
+  // XỬ LÝ BẮT BUỘC NHẬP HỌ VÀ TÊN MỚI ĐƯỢC VÀO LÀM BÀI
+  // =========================================================================
+  function handleStartExam(e) {
+    e.preventDefault();
+    const nameInput = document.getElementById('studentNameInput');
+    const classInput = document.getElementById('studentClassInput');
+    const errEl = document.getElementById('nameErrorMsg');
+    const val = nameInput.value.trim();
+
+    if (!val) {
+      nameInput.classList.add('input-error');
+      errEl.style.display = 'block';
+      nameInput.focus();
+      return;
+    }
+
+    studentName = val;
+    studentClass = classInput.value.trim();
+    nameInput.classList.remove('input-error');
+    errEl.style.display = 'none';
+
+    document.getElementById('headerStudentName').textContent = studentName;
+    document.getElementById('headerStudentClass').textContent = studentClass ? `(${studentClass})` : "";
+    document.getElementById('omrStudentName').textContent = studentName;
+
+    document.getElementById('startOverlay').style.display = 'none';
+    startTimer();
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    updateTimerUI();
+    timerInterval = setInterval(() => {
+      if (isSubmitted) return;
+      remainingSeconds--;
+      updateTimerUI();
+      if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        submitExam(true);
+      }
+    }, 1000);
+  }
+
+  function updateTimerUI() {
+    const m = String(Math.floor(remainingSeconds / 60)).padStart(2, '0');
+    const s = String(remainingSeconds % 60).padStart(2, '0');
+    document.getElementById('timerDisplay').textContent = `${m}:${s}`;
+    document.getElementById('timerBox').classList.toggle('urgent', remainingSeconds <= 300);
+  }
+
+  // =========================================================================
+  // KHỞI TẠO GIAO DIỆN ĐỀ THI & PHIẾU OMR
+  // =========================================================================
+  function renderAll() {
+    applyExamConfigToUI();
+    const letters = ['A', 'B', 'C', 'D'];
+    const tag = EXAM_CONFIG.questionTag || "";
+
+    // PHẦN I
+    document.getElementById('part1List').innerHTML = PART1_QUESTIONS.map((item, idx) => `
+      <div class="q-card" id="card-p1-${idx}">
+        <div class="q-head">
+          <span class="q-num">Câu ${item.id} ${tag}</span>
+          <span class="q-status" id="status-p1-${idx}">0,25 điểm</span>
+        </div>
+        <div class="q-content">${item.q}</div>
+        ${item.figure || ''}
+        <div class="p1-options">
+          ${item.options.map((opt, oIdx) => `
+            <div class="p1-opt" id="p1-opt-${idx}-${oIdx}" onclick="selectP1(${idx}, ${oIdx})">
+              <span class="opt-circle">${letters[oIdx]}</span>
+              <span>${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="sol-box" id="sol-p1-${idx}">
+          <div class="sol-title">
+            <span>✅ Đáp án đúng: Phương án ${letters[item.ans]}</span>
+            <span id="user-ans-p1-${idx}"></span>
+          </div>
+          <div><b>Lời giải chi tiết:</b> ${item.explain}</div>
+          ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="q-video-link">🎬 Xem video chữa câu ${item.id} ↗</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // PHẦN II
+    document.getElementById('part2List').innerHTML = PART2_QUESTIONS.map((item, idx) => `
+      <div class="q-card" id="card-p2-${idx}">
+        <div class="q-head">
+          <span class="q-num">Câu ${item.id} - Phần II ${tag}</span>
+          <span class="q-status" id="status-p2-${idx}">Tối đa 1,0 điểm</span>
+        </div>
+        <div class="q-content">${item.q}</div>
+        ${item.figure || ''}
+        <div class="p2-list">
+          ${item.items.map(sub => `
+            <div class="p2-item" id="p2-item-${idx}-${sub.label}">
+              <div class="p2-text"><b>${sub.label})</b> ${sub.text}</div>
+              <div class="p2-btns">
+                <button type="button" class="tf-btn" id="p2-btn-${idx}-${sub.label}-T" onclick="selectP2(${idx}, '${sub.label}', true)">Đúng</button>
+                <button type="button" class="tf-btn" id="p2-btn-${idx}-${sub.label}-F" onclick="selectP2(${idx}, '${sub.label}', false)">Sai</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="sol-box" id="sol-p2-${idx}">
+          <div class="sol-title">
+            <span>✅ Đáp án chuẩn Câu ${item.id} Phần II: ${item.items.map(s => `${s.label}) ${s.ans ? 'Đúng' : 'Sai'}`).join(' • ')}</span>
+          </div>
+          <div>${item.explain}</div>
+          ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="q-video-link">🎬 Xem video chữa Câu ${item.id} Phần II ↗</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // PHẦN III
+    document.getElementById('part3List').innerHTML = PART3_QUESTIONS.map((item, idx) => `
+      <div class="q-card" id="card-p3-${idx}">
+        <div class="q-head">
+          <span class="q-num">Câu ${item.id} - Phần III ${tag}</span>
+          <span class="q-status" id="status-p3-${idx}">0,25 điểm</span>
+        </div>
+        <div class="q-content">${item.q}</div>
+        ${item.figure || ''}
+        <div class="p3-input-wrap">
+          <label for="p3-inp-${idx}"><b>Đáp số của bạn:</b></label>
+          <input
+            type="text"
+            inputmode="decimal"
+            maxlength="5"
+            class="p3-input"
+            id="p3-inp-${idx}"
+            placeholder="Nhập số..."
+            oninput="inputP3(${idx}, this.value)"
+          />
+        </div>
+        <div class="sol-box" id="sol-p3-${idx}">
+          <div class="sol-title">
+            <span>✅ Đáp số đúng: ${item.displayAns}</span>
+            <span id="user-ans-p3-${idx}"></span>
+          </div>
+          <div><b>Lời giải chi tiết:</b><br>${item.explain}</div>
+          ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer" class="q-video-link">🎬 Xem video chữa Câu ${item.id} Phần III ↗</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+
+    // OMR SHEET
+    const col1 = [], col2 = [];
+    const halfP1 = Math.ceil(PART1_QUESTIONS.length / 2);
+    for (let i = 0; i < PART1_QUESTIONS.length; i++) {
+      const r = `
+        <div class="omr-row">
+          <span class="omr-qnum" onclick="jumpToCard('card-p1-${i}')">${i + 1}</span>
+          <div class="omr-bubbles">
+            ${letters.map((L, oIdx) => `
+              <span class="bubble" id="omr-p1-${i}-${oIdx}" onclick="selectP1(${i}, ${oIdx})">${L}</span>
+            `).join('')}
+          </div>
+        </div>
+      `;
+      if (i < halfP1) col1.push(r);
+      else col2.push(r);
+    }
+    document.getElementById('omrP1').innerHTML = `<div>${col1.join('')}</div><div>${col2.join('')}</div>`;
+
+    document.getElementById('omrP2').innerHTML = PART2_QUESTIONS.map((q, idx) => `
+      <div class="omr-p2-card">
+        <div style="font-weight:700; font-size:0.76rem; margin-bottom:3px; cursor:pointer; color:var(--primary);" onclick="jumpToCard('card-p2-${idx}')">Câu ${q.id} (Đ / S)</div>
+        ${['a', 'b', 'c', 'd'].map(sub => `
+          <div class="omr-row">
+            <span><b>${sub})</b></span>
+            <div class="omr-bubbles">
+              <span class="bubble" id="omr-p2-${idx}-${sub}-T" onclick="selectP2(${idx}, '${sub}', true)">Đ</span>
+              <span class="bubble" id="omr-p2-${idx}-${sub}-F" onclick="selectP2(${idx}, '${sub}', false)">S</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `).join('');
+
+    document.getElementById('omrP3').innerHTML = PART3_QUESTIONS.map((q, idx) => `
+      <div class="omr-p3-card" onclick="jumpToCard('card-p3-${idx}')" style="cursor:pointer;">
+        <b>Câu ${q.id}</b>
+        <div class="omr-p3-boxes" id="omr-p3-boxes-${idx}">
+          <div class="omr-p3-char"></div>
+          <div class="omr-p3-char"></div>
+          <div class="omr-p3-char"></div>
+          <div class="omr-p3-char"></div>
+        </div>
+      </div>
+    `).join('');
+
+    updateProgressCounter();
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise();
+    }
+  }
+
+  // =========================================================================
+  // ĐỒNG BỘ LỰA CHỌN GIỮA ĐỀ THI VÀ PHIẾU TRẢ LỜI
+  // =========================================================================
+  function selectP1(qIdx, optIdx) {
+    if (isSubmitted) return;
+    userState.p1[qIdx] = optIdx;
+    for (let i = 0; i < 4; i++) {
+      document.getElementById(`p1-opt-${qIdx}-${i}`).classList.toggle('selected', i === optIdx);
+      document.getElementById(`omr-p1-${qIdx}-${i}`).classList.toggle('filled', i === optIdx);
+    }
+    updateProgressCounter();
+  }
+
+  function selectP2(qIdx, subKey, val) {
+    if (isSubmitted) return;
+    userState.p2[qIdx][subKey] = val;
+    document.getElementById(`p2-btn-${qIdx}-${subKey}-T`).classList.toggle('active-true', val === true);
+    document.getElementById(`p2-btn-${qIdx}-${subKey}-F`).classList.toggle('active-false', val === false);
+    document.getElementById(`omr-p2-${qIdx}-${subKey}-T`).classList.toggle('filled', val === true);
+    document.getElementById(`omr-p2-${qIdx}-${subKey}-F`).classList.toggle('filled', val === false);
+    updateProgressCounter();
+  }
+
+  function inputP3(qIdx, val) {
+    if (isSubmitted) return;
+    const clean = val.trim().slice(0, 4);
+    userState.p3[qIdx] = clean;
+    const chars = clean.split('');
+    document.getElementById(`omr-p3-boxes-${qIdx}`).innerHTML = [0, 1, 2, 3].map(i => `
+      <div class="omr-p3-char">${chars[i] || ''}</div>
+    `).join('');
+    updateProgressCounter();
+  }
+
+  function updateProgressCounter() {
+    const totalQ = PART1_QUESTIONS.length + PART2_QUESTIONS.length + PART3_QUESTIONS.length;
+    const c1 = userState.p1.filter(v => v !== null).length;
+    const c2 = userState.p2.filter(obj => obj.a !== null || obj.b !== null || obj.c !== null || obj.d !== null).length;
+    const c3 = userState.p3.filter(v => v.trim() !== "").length;
+    const done = c1 + c2 + c3;
+    document.getElementById('mobileProgressText').textContent = `${done}/${totalQ}`;
+  }
+
+  function toggleOMRDrawer(open) {
+    document.getElementById('omrPanel').classList.toggle('open', open);
+    document.getElementById('drawerBackdrop').classList.toggle('open', open);
+  }
+
+  function jumpToCard(cardId) {
+    toggleOMRDrawer(false);
+    const el = document.getElementById(cardId);
+    if (el) {
+      el.style.display = 'block';
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // =========================================================================
+  // CHẤM ĐIỂM, HIỂN THỊ VIDEO GIẢI & BẢNG ĐÁP ÁN CHI TIẾT SAU KHI NỘP BÀI
+  // =========================================================================
+  function submitExam(autoByTimer = false) {
+    if (isSubmitted) return;
+    isSubmitted = true;
+    clearInterval(timerInterval);
+    toggleOMRDrawer(false);
+
+    const letters = ['A', 'B', 'C', 'D'];
+
+    // 1. Chấm Phần I
+    let p1Correct = 0;
+    const quickP1HTML = [];
+
+    PART1_QUESTIONS.forEach((item, idx) => {
+      const u = userState.p1[idx];
+      const ok = u === item.ans;
+      if (ok) p1Correct++;
+
+      const card = document.getElementById(`card-p1-${idx}`);
+      const status = document.getElementById(`status-p1-${idx}`);
+      card.dataset.result = ok ? 'correct' : 'wrong';
+      card.classList.add(ok ? 'card-correct' : 'card-wrong');
+
+      status.textContent = ok ? "Đúng (+0,25đ)" : (u === null ? "Chưa làm (0đ)" : "Sai (0đ)");
+      status.style.background = ok ? "#dcfce7" : "#fee2e2";
+      status.style.color = ok ? "#15803d" : "#b91c1c";
+
+      document.getElementById(`user-ans-p1-${idx}`).textContent =
+        u === null ? "Bạn chưa chọn" : `Bạn chọn: ${letters[u]}`;
+
+      for (let o = 0; o < 4; o++) {
+        const optEl = document.getElementById(`p1-opt-${idx}-${o}`);
+        const omrEl = document.getElementById(`omr-p1-${idx}-${o}`);
+        if (o === item.ans) {
+          optEl.classList.add('ans-correct');
+          if (u === item.ans) omrEl.classList.add('omr-correct');
+          else omrEl.classList.add('omr-missed');
+        } else if (o === u) {
+          optEl.classList.add('ans-wrong');
+          omrEl.classList.add('omr-wrong');
+        }
+      }
+
+      document.getElementById(`sol-p1-${idx}`).style.display = 'block';
+      quickP1HTML.push(`
+        <div class="key-cell ${ok ? 'k-ok' : 'k-err'}" onclick="jumpToCard('card-p1-${idx}')">
+          <b>C${item.id}: ${letters[item.ans]}</b>
+        </div>
+      `);
+    });
+
+    const p1Score = p1Correct * 0.25;
+
+    // 2. Chấm Phần II
+    let p2Score = 0;
+    let p2SubCorrectTotal = 0;
+    const ruleP2 = { 0: 0, 1: 0.1, 2: 0.25, 3: 0.5, 4: 1.0 };
+    const quickP2P3HTML = [];
+
+    PART2_QUESTIONS.forEach((item, idx) => {
+      let subCorrect = 0;
+      item.items.forEach(sub => {
+        const u = userState.p2[idx][sub.label];
+        const rowEl = document.getElementById(`p2-item-${idx}-${sub.label}`);
+        const btnT = document.getElementById(`p2-btn-${idx}-${sub.label}-T`);
+        const btnF = document.getElementById(`p2-btn-${idx}-${sub.label}-F`);
+        const omrT = document.getElementById(`omr-p2-${idx}-${sub.label}-T`);
+        const omrF = document.getElementById(`omr-p2-${idx}-${sub.label}-F`);
+
+        if (sub.ans === true) btnT.classList.add('correct-choice');
+        else btnF.classList.add('correct-choice');
+
+        if (u === sub.ans) {
+          subCorrect++;
+          p2SubCorrectTotal++;
+          rowEl.classList.add('sub-correct');
+          if (u === true) omrT.classList.add('omr-correct');
+          else omrF.classList.add('omr-correct');
+        } else {
+          rowEl.classList.add('sub-wrong');
+          if (u === true) omrT.classList.add('omr-wrong');
+          if (u === false) omrF.classList.add('omr-wrong');
+          if (sub.ans === true) omrT.classList.add('omr-missed');
+          else omrF.classList.add('omr-missed');
+        }
+      });
+
+      const qPts = ruleP2[subCorrect];
+      p2Score += qPts;
+      const card = document.getElementById(`card-p2-${idx}`);
+      const status = document.getElementById(`status-p2-${idx}`);
+      card.dataset.result = subCorrect === 4 ? 'correct' : 'wrong';
+      card.classList.add(subCorrect === 4 ? 'card-correct' : 'card-wrong');
+      status.textContent = `Đúng ${subCorrect}/4 ý (+${qPts.toFixed(2).replace('.', ',')}đ)`;
+      status.style.background = subCorrect === 4 ? "#dcfce7" : "#fef3c7";
+      status.style.color = subCorrect === 4 ? "#15803d" : "#b45309";
+
+      document.getElementById(`sol-p2-${idx}`).style.display = 'block';
+      quickP2P3HTML.push(`
+        <div class="key-cell ${subCorrect === 4 ? 'k-ok' : 'k-err'}" style="text-align:left; padding:8px;" onclick="jumpToCard('card-p2-${idx}')">
+          <b>Phần II - Câu ${item.id}:</b> ${item.items.map(s => `${s.label}-${s.ans ? 'Đ' : 'S'}`).join(', ')}
+        </div>
+      `);
+    });
+
+    // 3. Chấm Phần III
+    let p3Correct = 0;
+    PART3_QUESTIONS.forEach((item, idx) => {
+      const raw = userState.p3[idx].trim().replace(',', '.');
+      const num = raw === "" ? NaN : parseFloat(raw);
+      const ok = !isNaN(num) && Math.abs(num - item.ans) < 1e-4;
+      if (ok) p3Correct++;
+
+      const card = document.getElementById(`card-p3-${idx}`);
+      const status = document.getElementById(`status-p3-${idx}`);
+      const inp = document.getElementById(`p3-inp-${idx}`);
+      inp.disabled = true;
+
+      card.dataset.result = ok ? 'correct' : 'wrong';
+      card.classList.add(ok ? 'card-correct' : 'card-wrong');
+      status.textContent = ok ? "Đúng (+0,25đ)" : `Sai (Đ/A: ${item.displayAns})`;
+      status.style.background = ok ? "#dcfce7" : "#fee2e2";
+      status.style.color = ok ? "#15803d" : "#b91c1c";
+
+      document.getElementById(`user-ans-p3-${idx}`).textContent =
+        raw === "" ? "Bạn chưa điền" : `Bạn điền: ${userState.p3[idx]}`;
+
+      document.getElementById(`sol-p3-${idx}`).style.display = 'block';
+      quickP2P3HTML.push(`
+        <div class="key-cell ${ok ? 'k-ok' : 'k-err'}" style="text-align:left; padding:8px;" onclick="jumpToCard('card-p3-${idx}')">
+          <b>Phần III - Câu ${item.id}:</b> ${item.displayAns}
+        </div>
+      `);
+    });
+
+    const p3Score = p3Correct * 0.25;
+    const totalScore = p1Score + p2Score + p3Score;
+
+    const used = TOTAL_SECONDS - remainingSeconds;
+    const um = String(Math.floor(used / 60)).padStart(2, '0');
+    const us = String(used % 60).padStart(2, '0');
+
+    document.getElementById('resTotal').textContent = `${totalScore.toFixed(2).replace('.', ',')} / 10`;
+    document.getElementById('resTime').textContent = `Thời gian làm: ${um}:${us}`;
+    document.getElementById('resP1').textContent = `${p1Score.toFixed(2).replace('.', ',')} / 4,50`;
+    document.getElementById('resCountP1').textContent = `${p1Correct}/${PART1_QUESTIONS.length} câu đúng`;
+    document.getElementById('resP2').textContent = `${p2Score.toFixed(2).replace('.', ',')} / 4,00`;
+    document.getElementById('resCountP2').textContent = `${p2SubCorrectTotal}/${PART2_QUESTIONS.length * 4} ý đúng`;
+    document.getElementById('resP3').textContent = `${p3Score.toFixed(2).replace('.', ',')} / 1,50`;
+    document.getElementById('resCountP3').textContent = `${p3Correct}/${PART3_QUESTIONS.length} câu đúng`;
+
+    document.getElementById('resultStudentInfo').innerHTML =
+      `Thí sinh: <b>${studentName}</b> ${studentClass ? `(${studentClass})` : ''} • Mã đề: <b>${EXAM_CONFIG.examCode}</b> • ${autoByTimer ? '⏰ Hết giờ tự động nộp bài' : '✅ Đã nộp bài thành công'}`;
+
+    renderVideoSolutionSection();
+
+    document.getElementById('quickKeyP1').innerHTML = quickP1HTML.join('');
+    document.getElementById('quickKeyP2P3').innerHTML = quickP2P3HTML.join('');
+
+    document.getElementById('resultHub').style.display = 'block';
+    document.getElementById('topSubmitBtn').style.display = 'none';
+    document.getElementById('mobileSubmitBtn').textContent = '📖 Xem đáp án';
+    document.getElementById('mobileSubmitBtn').onclick = scrollToFirstSolution;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.MathJax && window.MathJax.typesetPromise) {
+      window.MathJax.typesetPromise();
+    }
+  }
+
+  function scrollToFirstSolution() {
+    const firstCard = document.getElementById('card-p1-0');
+    if (firstCard) firstCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function filterQuestions(mode) {
+    ['all', 'wrong', 'correct'].forEach(k => {
+      document.getElementById(`filter-${k}`).classList.toggle('active', k === mode);
+    });
+    document.querySelectorAll('.q-card').forEach(card => {
+      if (mode === 'all') {
+        card.style.display = 'block';
+      } else {
+        card.style.display = card.dataset.result === mode ? 'block' : 'none';
+      }
+    });
+  }
+
+  function resetExam() {
+    isSubmitted = false;
+    remainingSeconds = TOTAL_SECONDS;
+    userState.p1.fill(null);
+    userState.p2 = Array.from({ length: PART2_QUESTIONS.length }, () => ({ a: null, b: null, c: null, d: null }));
+    userState.p3.fill("");
+
+    document.getElementById('resultHub').style.display = 'none';
+    document.getElementById('videoSolutionSection').innerHTML = '';
+    document.getElementById('topSubmitBtn').style.display = 'inline-flex';
+    document.getElementById('mobileSubmitBtn').textContent = '✅ Nộp bài';
+    document.getElementById('mobileSubmitBtn').onclick = () => submitExam();
+
+    renderAll();
+    startTimer();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  window.addEventListener('DOMContentLoaded', renderAll);
+</script>
+</body>
+</html>
